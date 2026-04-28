@@ -19,6 +19,7 @@ nmap -sC -sV -p 1-65535 $IP
 |------|------|
 | TargetIP | 192.168.56.103 |
 | TargetPort | 22(TCP)<br>80(http)<br>111(RPCBIND)<br>3306(MySQL) |
+
 5.HTTPサービスにアクセス※ブラウザで
 
 ![kekka](images/kekka.png)
