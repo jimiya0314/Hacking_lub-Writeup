@@ -51,4 +51,9 @@ PHPを動かすにはApacheやNginxのようにPHPを解釈するための特別
   ```
   http://localhost:8000/malicious.php
   ```
-  
+![kekka](images/kekka.png)
+**etc/passwdファイルが出力されている				→PHPファイルが動作している**
+- curlコマンドでも実行可能
+  ```
+  curl -X GET http://localhost:8000/malicious.php
+  ```
