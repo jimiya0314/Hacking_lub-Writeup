@@ -131,7 +131,7 @@ $python3 php_server.py
 
 http://localhost:8000/malicious.php
 
-![kekka.png](images/image.png)
+![kekka.png](../images/image.png)
 
 etc/passwdファイルが出力されている				→PHPファイルが動作している			
 ④curlコマンドでも実行可能							
