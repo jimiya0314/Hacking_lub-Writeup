@@ -123,4 +123,4 @@ www-data@DC-1:/var/tmp$ cd /tmp
 www-data@DC-1:/$ find / -perm -u=s -type f 2> /dev/null
 ```
 18.Findコマンドを利用してシェルを奪う
-- GTFOBins ⇒
+- GTFOBins ⇒ https://gtfobins[.]githb[.]io
