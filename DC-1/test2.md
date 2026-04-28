@@ -117,3 +117,7 @@ drwxr-xr-x  2 flag4 flag4 4096 Feb 19  2019 flag4					→見てみる
 www-data@DC-1:/var/tmp$ cd /dev/shm									
 www-data@DC-1:/var/tmp$ cd /tmp
 ```
+17.SUIDファイルを検索（定石）
+```
+www-data@DC-1:/$ find / -perm -u=s -type f 2> /dev/null
+```
