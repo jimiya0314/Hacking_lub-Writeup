@@ -21,5 +21,14 @@ nmap -sC -sV -p 1-65535 $IP
 | TargetPort | 22(TCP)<br>80(http)<br>111(RPCBIND)<br>3306(MySQL) |
 
 5.HTTPサービスにアクセス※ブラウザで
-
+```
+http://192.168.56.103/
+```
+6.よく使われる"robots.txt"ファイルにアクセス※ブラウザにて
+```
+http://192.168.56.103/robots.txt
+```
+7.URLを環境変数に設定する
+  - Disallow: /MAINTAINERS.txt　←注目<br>									
+Disallwフィールドはクローラー（検索エンジンのデータベース作成に用いられる巡回プログラム）による巡回を拒否するものだが、ブラウザからアクセス可能
 ![kekka](images/kekka.png)
