@@ -94,3 +94,11 @@ www-data@DC-1:/var/www$ ←結果
 www-data@DC-1:/var/www$ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/usr/games:/tmp ←パスを追加する
 www-data@DC-1:/home$ alias ll='ls -la --color=auto' llコマンドで色をつけてファイルを列挙できるようにする
 ```
+14.OSを特定する
+- システム内に簡単に攻められる脆弱性が見つからない場合、カーネルベースの脆弱性を突いて権限の昇格を狙う
+```
+www-data@DC-1:/$ uname -a									
+Linux DC-1 3.2.0-6-486 #1 Debian 3.2.102-1 i686 GNU/Linux									
+www-data@DC-1:/$ cat /etc/-release → Debian　バージョン７		
+www-data@DC-1:/$ cat /etc/issue
+```
