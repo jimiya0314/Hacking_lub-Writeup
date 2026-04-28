@@ -28,7 +28,18 @@ http://192.168.56.103/
 ```
 http://192.168.56.103/robots.txt
 ```
-7.URLを環境変数に設定する
   - Disallow: /MAINTAINERS.txt　←注目<br>									
 Disallwフィールドはクローラー（検索エンジンのデータベース作成に用いられる巡回プログラム）による巡回を拒否するものだが、ブラウザからアクセス可能
+7.URLを環境変数に設定する
+```
+$export URL="http://:80$IP/"
+```
+8.Webサービスでスキャン
+　- NATに切り替えてdroopscanをインストール
+  ```
+  python3 -m venv myenv									
+  source myenv/bin/activate									
+  pip install droopescan
+  ```
+
 ![kekka](images/kekka.png)
