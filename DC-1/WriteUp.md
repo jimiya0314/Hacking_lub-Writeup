@@ -45,19 +45,19 @@ export URL="http://:80$IP/"
   ```
   droopescan scan drupal -u $URL
   ```
-- Drupal用のExploitを探す※ブラウザで
+9.Drupal用のExploitを探す※ブラウザで
   ```
   https://www.exploit-db.com/exploits/35150
   ```
   - Drupal 7 remote		→検索<br>						
 脆弱性の名前として「Drupalgeddon」をメモ<br>	
 →Drupal のSQLインジェクションの脆弱性の通称
-- MetasploitでDrupalgeddonを狙う
-  ```
-  msfconsole									
-  # [msf](Jobs:0 Agents:0) >> search type:exploit drupal									
-  # [msf](Jobs:0 Agents:0) >> use exploit/multi/http/drupal_drupageddon
-  ```
+10.MetasploitでDrupalgeddonを狙う
+```
+msfconsole									
+# [msf](Jobs:0 Agents:0) >> search type:exploit drupal									
+# [msf](Jobs:0 Agents:0) >> use exploit/multi/http/drupal_drupageddon
+```
 ## まだあるよ
 ```
 oh no
