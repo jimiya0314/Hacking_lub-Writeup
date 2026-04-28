@@ -109,3 +109,11 @@ rwxr-xr-x  3 root  root  4096 Feb 19  2019 .
 drwxr-xr-x 23 root  root  4096 Feb 19  2019 ..									
 drwxr-xr-x  2 flag4 flag4 4096 Feb 19  2019 flag4					→見てみる
 ```
+16.一時ファイルの置き場所を調べる
+- 今回の一時ファイルの定義
+  - プログラムの実行中に一時的に必要に萎えるデータやプログラム間のデータの受け渡しに使われるファイル
+  - /tmpと/dev/shmが候補
+```
+www-data@DC-1:/var/tmp$ cd /dev/shm									
+www-data@DC-1:/var/tmp$ cd /tmp
+```
