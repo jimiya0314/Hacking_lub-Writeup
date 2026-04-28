@@ -52,6 +52,7 @@ export URL="http://:80$IP/"
   - Drupal 7 remote		→検索<br>						
 脆弱性の名前として「Drupalgeddon」をメモ<br>	
 →Drupal のSQLインジェクションの脆弱性の通称
+
 10.MetasploitでDrupalgeddonを狙う
 ```
 msfconsole									
