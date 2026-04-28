@@ -7,4 +7,4 @@ $sudo ifconfig
 ---
 $sudo fping -aqg 192.168.56.0/24
 ---
-![kekka](
+![kekka](images/kekka.png)
