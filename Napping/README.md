@@ -159,6 +159,8 @@ find / -group administrator 2> /dev/null
     - adrianユーザーのシェルを奪取　`adrian@napping:~$ `
     - リバースシェルが機能しないときがある⇒作ったファイルが存在してるか確認
 *<以下,adrian>*
+
+
 18.完全な対話的シェルを奪取する
 ```
 python3 -c 'import pty;pty.spawn("/bin/bash")'
