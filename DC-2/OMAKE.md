@@ -23,3 +23,4 @@ sudo python3 -m http.server 80
 ```
 curl http://192.168.56.104[:]80
 ```
+![簡易HTTPサーバー構築](images/HTTP.png)
