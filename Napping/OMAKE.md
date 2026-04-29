@@ -17,6 +17,7 @@
 - ジョブ制御ができない
 
 ###【第１段階】Pythonのptyモジュールを用いてttyシェルに切り替える
+
 1.ptyモジュールを用いるコマンドを実行
 ```bash
 python -c 'import pty; pty.spawn("/bin/sh")'
