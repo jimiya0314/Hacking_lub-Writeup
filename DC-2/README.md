@@ -47,6 +47,7 @@ http://dc-2/wp-admin
 wig $URL
 ```
 - wordpressのバージョンの絞り込みは成功
+
 10.ユーザー列挙
   - http://dc-2/?author=1　⇒　adminに転送
   - http://dc-2/?author=3　⇒　jerryに転送
@@ -55,6 +56,7 @@ wig $URL
 nmap -p80 --script http-wordpress-users $IP
 ```
 **Tomを発見**
+
 11.辞書ファイルを生成
 ```bash
 cewl dc-2
@@ -73,6 +75,7 @@ ssh jerry@$IP -p 7744
 ssh Tom@$IP -p 7744
 ```
 **入れる**
+
 14.Tomがアクセスできたので実行可能なコマンドを調べる
 *以下、tom@DC-2*
 ```bash
@@ -86,6 +89,7 @@ echo $SHELL
 - 機能制限モードを解除できない
 **結果**
 - あらゆるコマンドが使用不可
+
 15.基本コマンドが実行できる環境を目指す
 ### vi
 ```bash
