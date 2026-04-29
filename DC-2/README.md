@@ -118,6 +118,7 @@ cat flag3.txt
 su jerry
 ```
 *以下、jerry（su）*
+
 17.sudoコマンド設定を調べる
 ```bash
 sudo -l
