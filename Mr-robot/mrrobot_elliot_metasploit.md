@@ -157,3 +157,5 @@ wpcheck => false
 ```text
 [msf](Jobs:0 Agents:0) exploit(unix/webapp/wp_admin_shell_upload) >> exploit
 ```
+
+<img width="946" height="547" alt="image" src="https://github.com/user-attachments/assets/cf68f840-5e27-465a-8139-7e4f226e6503" />
