@@ -1,10 +1,117 @@
 1.自身のアドレスを調べる
+```bash
+ip a
+```
 
 2.PotatoマシンのIPアドレスを特定する
+```bash
+sudo netdiscover -i enp0s3 -r 192.168.56.0/24
+```
+```bash
+   IP            At MAC Address     Count     Len  MAC Vendor / Hostname
+ -----------------------------------------------------------------------------
+ 192.168.56.1    0a:00:27:00:00:0b      2     120  Unknown vendor
+ 192.168.56.100  08:00:27:a7:b4:59      1      60  PCS Systemtechnik GmbH
+ 192.168.56.102  08:00:27:eb:7d:02      1      60  PCS Systemtechnik GmbH
+```
+56.100 ⇒　DHCP<br>
+56.120　⇒　ターゲット
 
-3.IPアドレスを環境変数に
+3.実験用ディレクトリ作成
 
 ```
-あいうえお
+mkdir vulnhub/potato
 ```
-4.Potatoマシンに疎通確認
+4.Potatoマシンに疎通確認、ポートスキャン
+```bash
+ping -c 4 192.168.56.102
+```
+```bash
+sudo nmap -sC -sV -Pn -p- 192.168.56.102 -oN portscan_result.txt
+```
+
+| オプション　| 概要 | 
+|---|---|
+| -sC | デフォルトカテゴリのスクリプトでスキャン|
+| -sV| ソフトウェア名とバージョン|
+| -Pn | スキャン前に疎通確認をしない|
+| -p-| 全ポートえお対象にする（０～６５５３５まで）|
+| -oN | スキャンの結果を指定のファイルに出力|
+
+```
+# 出力結果
+PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.1 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|   3072 ef:24:0e:ab:d2:b3:16:b4:4b:2e:27:c0:5f:48:79:8b (RSA)
+|   256 f2:d8:35:3f:49:59:85:85:07:e6:a2:0e:65:7a:8c:4b (ECDSA)
+|_  256 0b:23:89:c3:c0:26:d5:64:5e:93:b7:ba:f5:14:7f:3e (ED25519)
+80/tcp   open  http    Apache httpd 2.4.41 ((Ubuntu))
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+|_http-title: Potato company
+2112/tcp open  ftp     ProFTPD
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+| -rw-r--r--   1 ftp      ftp           901 Aug  2  2020 index.php.bak
+|_-rw-r--r--   1 ftp      ftp            54 Aug  2  2020 welcome.msg
+MAC Address: 08:00:27:EB:7D:02 (Oracle VirtualBox virtual NIC)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+```
+22,80,2212の開放を確認
+
+| ポート番号　| 概要 | 
+|---|---|
+| ２２ | SSH|
+| ８０| HTTP|
+| ２１１２ | FTP（proFTPD⇒AnonymousFTPでログイン可能）|
+
+5.FTPサービスにアクセスする
+```bash
+ftp 192.168.56.102 2112
+```
+```bash
+Connected to 192.168.56.102.
+220 ProFTPD Server (Debian) [::ffff:192.168.56.102]
+Name (192.168.56.102:user): anonymous       #### ユーザー名入力「anonymous」
+331 Anonymous login ok, send your complete email address as your password
+Password: 　　　　　　　　　　　　　　　　　　　#### パスワード入力　適当でいい
+230-Welcome, archive user anonymous@192.168.56.101 !
+230-
+230-The local time is: Sat Jul 04 22:00:46 2026
+230-
+230 Anonymous access granted, restrictions apply
+Remote system type is UNIX.
+Using binary mode to transfer files.
+ftp> help
+```
+### 今回抑えておくコマンド
+
+| command　| 概要 | 
+|---|---|
+| dir | ファイル一覧を表示|
+| ls| 同上|
+| exit | 接続終了|
+| get | ファイルダウンロード|
+| put | ファイルアップロード|
+| mget | 複数ファイルダウンロード|
+| mput | 複数ファイルアップロード|
+| help| ヘルプを表示|
+
+6.ファイルをダウンロードする
+
+今回は２つしかなかったのでまとめてダウンロードした
+```bash
+mget *
+```
+
+7.ダウンロードしたファイルを調べる
+```bash
+#　ファイルの種類
+$file welcome.msg
+welcome.msg: ASCII text
+
+# 中身
+$cat welcome.msg
+Welcome, archive user %U@%R !
+
+The local time is: %T
+```
