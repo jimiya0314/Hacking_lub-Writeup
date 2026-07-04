@@ -115,3 +115,82 @@ Welcome, archive user %U@%R !
 
 The local time is: %T
 ```
+```bash
+$file index.php.bak
+index.php.bak: HTML document, ASCII text
+
+###
+ $cat index.php.bak
+<html>
+<head></head>
+<body>
+
+<?php
+
+$pass= "potato"; //note Change this password regularly
+
+if($_GET['login']==="1"){
+  if (strcmp($_POST['username'], "admin") == 0  && strcmp($_POST['password'], $pass) == 0) {
+    echo "Welcome! </br> Go to the <a href=\"dashboard.php\">dashboard</a>";
+    setcookie('pass', $pass, time() + 365*24*3600);
+  }else{
+    echo "<p>Bad login/password! </br> Return to the <a href=\"index.php\">login page</a> <p>";
+  }
+  exit();
+}
+?>
+
+
+  <form action="index.php?login=1" method="POST">
+                <h1>Login</h1>
+                <label><b>User:</b></label>
+                <input type="text" name="username" required>
+                </br>
+                <label><b>Password:</b></label>
+                <input type="password" name="password" required>
+                </br>
+                <input type="submit" id='submit' value='Login' >
+  </form>
+</body>
+</html>
+```
+8.HTTPサービスにアクセスする
+
+<img width="998" height="504" alt="image" src="https://github.com/user-attachments/assets/2bdd8363-9dc7-42d3-94a6-121a02cdfdc7" />
+
+9.アクセスできるファイルを列挙する
+```bash
+gobuster dir -u 192.168.56.102 -w /usr/share/wordlists/dirb/common.txt
+```
+```
+##結果
+===============================================================
+Gobuster v3.6
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://192.168.56.102
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                /usr/share/wordlists/dirb/common.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.6
+[+] Timeout:                 10s
+===============================================================
+Starting gobuster in directory enumeration mode
+===============================================================
+/.hta                 (Status: 403) [Size: 279]
+/.htpasswd            (Status: 403) [Size: 279]
+/.htaccess            (Status: 403) [Size: 279]
+/admin                (Status: 301) [Size: 316] [--> http://192.168.56.102/admin/]
+/index.php            (Status: 200) [Size: 245]
+/server-status        (Status: 403) [Size: 279]
+Progress: 4614 / 4615 (99.98%)
+===============================================================
+Finished
+```
+/admin を見つけたのでアクセスする
+
+```
+192.168.56.102/admin
+```
+<img width="567" height="305" alt="image" src="https://github.com/user-attachments/assets/bce2fb75-790a-4671-b4d1-b0e3ca825365" />
