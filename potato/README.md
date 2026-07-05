@@ -373,7 +373,7 @@ Matching Defaults entries for webadmin on serv:
 User webadmin may run the following commands on serv:
     (ALL : ALL) /bin/nice /notes/*  ←　見るのはこれ
 ```
-# /bin/nice/notes以下すべてのコマンドが実行できる（notes配下には大したものはない）
+#### /bin/nice/notes以下すべてのコマンドが実行できる（notes配下には大したものはない）
 
 ncieコマンドを利用してどうにかbashにたどり着くようにするには
 ```bash
